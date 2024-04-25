@@ -1,0 +1,37 @@
+[package]
+name = "wasm-frost"
+version = "0.1.0"
+authors = ["space-shell <j-n@hotmail.co.uk>"]
+edition = "2018"
+
+[rust]
+lld = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["console_error_panic_hook"]
+
+[dependencies]
+wasm-bindgen = "0.2.91"
+getrandom = {version = "0.2", features = ["js"]}
+console_error_panic_hook = { version = "0.1.7", optional = true }
+rand = "0.8.5"
+rand_chacha = "0.3.1"
+schnorr_fun = { version = "0.9.2", features = ["serde"] }
+serde = { version = "1.0.152", features = ["derive"] }
+serde-wasm-bindgen = "0.6.5"
+serde_json = "1.0.91"
+sha2 = "0.10.6"
+
+[profile.release]
+opt-level = "z"
+strip = true
+lto = true
+codegen-units = 1
+
+[toolchain]
+channel = "nightly"
+targets = ["wasm32-unknown-unknown"]
+components = [ "llvm-tools-preview" ]
